@@ -1,8 +1,12 @@
 import os
-import openai
+from openai import OpenAI
 import sys
+from dotenv import load_dotenv
 
-openai.api_key = os.getenv("OPEN_API_KEY")
+load_dotenv() 
+
+client = OpenAI()
+
 video_id: str = sys.argv[1]
 audio_file_path:str  = os.path.join(
     os.getcwd(), 'downloaded_audio', video_id + '.m4a'
@@ -10,9 +14,7 @@ audio_file_path:str  = os.path.join(
 
 
 audio_file = open(audio_file_path, 'rb')
-transcript = openai.Audio.transcribe(
-    file=audio_file,
-    model='whisper-1',
-    response_format='srt',
-)
+transcript = client.audio.transcriptions.create(file=audio_file,
+model='whisper-1',
+response_format='srt')
 print(transcript)

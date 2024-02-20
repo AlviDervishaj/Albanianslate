@@ -1,9 +1,14 @@
 import os
 import sys
-import openai
+from openai import OpenAI
 import pysrt
+from dotenv import load_dotenv
 
-openai.api_key = os.getenv('OPEN_API_KEY')
+load_dotenv() 
+
+
+client = OpenAI()
+
 
 input_data = sys.stdin.read()
 parsed_input_srt = pysrt.from_string(input_data)
@@ -17,12 +22,10 @@ prompt_base = (
 def translate_text(text: str):
     prompt = prompt_base
     prompt += text + "[END]\n"
-    response = openai.Completion.create(
-        model='text-davinci-003',
-        prompt=prompt,
-        max_tokens=70,
-        temperature=0
-    )
+    response = client.completions.create(model='text-davinci-003',
+    prompt=prompt,
+    max_tokens=70,
+    temperature=0)
     return response.choices[0].text.strip()
 
 for index, subtitle in enumerate(parsed_input_srt):
