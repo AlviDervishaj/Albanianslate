@@ -10,7 +10,7 @@ export default function POST(req: NextApiRequest, res: NextApiResponse) {
     return res.end();
   }
 
-  const cmd = spawn('python3', [
+  const cmd = spawn('python', [
     path.join(process.cwd(), 'scripts/translate.py')
   ], {
     cwd: process.cwd()
