@@ -50,15 +50,15 @@ export default function Home() {
   const [resultTranscript, setResultTranscript] = useState<string>('');
   const onSubmit = async (videoUrl: string) => {
     const vId: string | null = extractVideoIdFromURL(videoUrl);
-    if(typeof vId === 'string'){
+    if (typeof vId === 'string') {
       setResultTranscript('');
       setProcessing(true);
       const transcriptVideo = await processVideo(vId, message => {
         setProgressOutput(prev => prev + message);
       })
 
-      if(transcriptVideo) setResultTranscript(transcriptVideo);
-      
+      if (transcriptVideo) setResultTranscript(transcriptVideo);
+
       setProcessing(false);
       setActiveTab('result');
     }

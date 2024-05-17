@@ -17,4 +17,7 @@ audio_file = open(audio_file_path, 'rb')
 transcript = client.audio.transcriptions.create(file=audio_file,
 model='whisper-1',
 response_format='srt')
+# save to file 
+with open(f"./transcripts/{video_id}.srt", "w+") as f:
+    f.write(transcript)
 print(transcript)
